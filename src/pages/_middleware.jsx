@@ -13,9 +13,13 @@ export function middleware(request) {
     !request.nextUrl.pathname.includes('/api/') &&
     request.nextUrl.locale === 'default'
 
+  // https://nextjs.org/docs/messages/middleware-relative-urls
+  const url = request.nextUrl.clone()
+  url.pathname = '/dest'
+
   return shouldHandleLocale
     ? NextResponse.redirect(
-        `/en${stripDefaultLocale(request.nextUrl.pathname)}${
+        `${url}/en${stripDefaultLocale(request.nextUrl.pathname)}${
           request.nextUrl.search
         }`
       )
