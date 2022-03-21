@@ -9,7 +9,7 @@ function Card({ element, categoryName }) {
   return (
     <Link
       href={`/${categoryName}/${getName(element)
-        .replaceAll(' ', '-')
+        ?.replaceAll(' ', '-')
         .toLowerCase()}`}
     >
       <a className="card">

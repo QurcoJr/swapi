@@ -13,7 +13,7 @@ function renderDetails(details) {
 
     return (
       <tr key={key}>
-        <td>{key.replaceAll('_', ' ')}: </td>
+        <td>{key?.replaceAll('_', ' ')}: </td>
         <td>{value}</td>
       </tr>
     )
@@ -66,7 +66,7 @@ function DetailsPage({ details }) {
 export async function getStaticProps({ params, locale }) {
   const data = await searchUnit({
     categoryName: params.category,
-    name: params.name.replaceAll('-', ' '),
+    name: params.name?.replaceAll('-', ' '),
     lang: locale
   })
 
@@ -91,7 +91,7 @@ export async function getStaticPaths({ locales }) {
     category.results.forEach(data => {
       params.push({
         category: categories[index],
-        name: getName(data).replaceAll(' ', '-').toLowerCase()
+        name: getName(data)?.replaceAll(' ', '-').toLowerCase()
       })
     })
   })
