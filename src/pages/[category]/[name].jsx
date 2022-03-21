@@ -2,7 +2,8 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { getAllCategories } from 'api-client/get-all-categories'
 import { getCategory } from 'api-client/get-category'
-import { getSpecificUnit } from 'api-client/get-specific-unit'
+import { searchUnit } from 'api-client/search-unit'
+import { getName } from 'utils/get-name'
 
 function renderDetails(details) {
   const jsx = Object.entries(details).map(([key, value]) => {
@@ -12,7 +13,7 @@ function renderDetails(details) {
 
     return (
       <tr key={key}>
-        <td>{key.replace('_', ' ')}: </td>
+        <td>{key.replaceAll('_', ' ')}: </td>
         <td>{value}</td>
       </tr>
     )
@@ -31,14 +32,11 @@ function DetailsPage({ details }) {
   return (
     <>
       <Head>
-        <title>
-          {(details.name ?? details.title ?? details.whrascwo)?.toUpperCase()} |
-          SWAPI
-        </title>
+        <title>{getName(details)?.toUpperCase()} | SWAPI</title>
       </Head>
       <div className="container">
         <button onClick={router.back}>Go Back &#8592;</button>
-        <h1>{details.name ?? details.title ?? details.whrascwo}</h1>
+        <h1>{getName(details)}</h1>
         {renderDetails(details)}
       </div>
 
@@ -66,13 +64,17 @@ function DetailsPage({ details }) {
 }
 
 export async function getStaticProps({ params, locale }) {
-  const details = await getSpecificUnit({
+  const data = await searchUnit({
     categoryName: params.category,
-    id: params.id,
+    name: params.name.replaceAll('-', ' '),
     lang: locale
   })
 
-  return { props: { details } }
+  return {
+    props: {
+      details: data.results?.[0] ?? data.rcwochuanaoc[0]
+    }
+  }
 }
 
 export async function getStaticPaths({ locales }) {
@@ -87,20 +89,15 @@ export async function getStaticPaths({ locales }) {
   const paths = []
   allCategoriesData.forEach((category, index) => {
     category.results.forEach(data => {
-      // url => 'https://swapi.dev/api/vehicles/1/' => ['https:', '', 'swapi.dev', 'api', 'vehicles', '1', ''] => 1
-      const urlChunks = data.url.split('/')
-      const id = urlChunks[urlChunks.length - 2]
       params.push({
         category: categories[index],
-        id
+        name: getName(data).replaceAll(' ', '-').toLowerCase()
       })
     })
   })
 
-  // remove "default" from locales
-  const actualLocales = locales.slice(1)
   params.forEach(param => {
-    actualLocales.forEach(loc => paths.push({ params: param, locale: loc }))
+    locales.forEach(loc => paths.push({ params: param, locale: loc }))
   })
 
   return {

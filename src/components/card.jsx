@@ -1,17 +1,22 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import placeholder from '../../public/images/placeholder.jpeg'
+import { getName } from 'utils/get-name'
 
 const apiURL = process.env.NEXT_PUBLIC_API_URL
 
-function Card({ element }) {
+function Card({ element, categoryName }) {
   return (
-    <Link href={element.url.slice(apiURL.length, -1)}>
+    <Link
+      href={`/${categoryName}/${getName(element)
+        .replaceAll(' ', '-')
+        .toLowerCase()}`}
+    >
       <a className="card">
         <div className="placeholder">
           <Image src={placeholder} alt="star wars" height={200} width={160} />
         </div>
-        <h2>{element.name ?? element.title}</h2>
+        <h2>{getName(element)}</h2>
 
         <style jsx>{`
           .card {
