@@ -72,7 +72,7 @@ export async function getStaticProps({ params, locale }) {
     lang: locale
   })
 
-  return { props: { details: details } }
+  return { props: { details } }
 }
 
 export async function getStaticPaths({ locales }) {
