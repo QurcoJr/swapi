@@ -32,7 +32,7 @@ function DetailsPage({ details }) {
   return (
     <>
       <Head>
-        <title>{getName(details)?.toUpperCase()} | SWAPI</title>
+        <title>{getName(details).toUpperCase()} | SWAPI</title>
       </Head>
       <div className="container">
         <button onClick={router.back}>Go Back &#8592;</button>
@@ -92,7 +92,7 @@ export async function getStaticPaths({ locales }) {
       params.push({
         category: categories[index],
         name: getName(data)
-          ?.replaceAll(' ', '-')
+          .replaceAll(' ', '-')
           .replaceAll('/', '-')
           .toLowerCase()
       })
