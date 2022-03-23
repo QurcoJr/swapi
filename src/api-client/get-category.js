@@ -1,5 +1,5 @@
 import { client } from './client'
 
 export function getCategory({ categoryName }) {
-  return client(categoryName)
+  return client(`category/${categoryName}`)
 }

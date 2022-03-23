@@ -1,7 +1,11 @@
 import App from 'next/app'
 import 'styles/globals.css'
-import { getAllCategories } from 'api-client/get-all-categories'
+import { getCategories } from 'api-client/get-categories'
 import { Layout } from 'components/layout'
+import { API } from 'aws-amplify'
+import amp_config from 'aws-exports'
+
+API.configure(amp_config)
 
 function MyApp({ Component, pageProps, categories }) {
   return (
@@ -13,10 +17,9 @@ function MyApp({ Component, pageProps, categories }) {
 
 MyApp.getInitialProps = async appContext => {
   const appInitialProps = await App.getInitialProps(appContext)
-  let categories = await getAllCategories()
-  categories = Object.keys(categories)
+  const response = await getCategories()
 
-  return { ...appInitialProps, categories }
+  return { ...appInitialProps, categories: response.data.categories }
 }
 
 export default MyApp

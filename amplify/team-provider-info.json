@@ -1,0 +1,23 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-swapi-dev-00054-authRole",
+      "UnauthRoleArn": "arn:aws:iam::849727218323:role/amplify-swapi-dev-00054-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::849727218323:role/amplify-swapi-dev-00054-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-swapi-dev-00054-deployment",
+      "UnauthRoleName": "amplify-swapi-dev-00054-unauthRole",
+      "StackName": "amplify-swapi-dev-00054",
+      "StackId": "arn:aws:cloudformation:us-east-1:849727218323:stack/amplify-swapi-dev-00054/ccbbbcd0-aa1a-11ec-b1fb-0ec92f60fb8b",
+      "AmplifyAppId": "d3q3vyry509485"
+    },
+    "categories": {
+      "function": {
+        "swapirest": {
+          "deploymentBucketName": "amplify-swapi-dev-00054-deployment",
+          "s3Key": "amplify-builds/swapirest-5a583066375561332f4f-build.zip"
+        }
+      }
+    }
+  }
+}

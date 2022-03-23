@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "paths": {
+    "/categories": {
+      "name": "/categories",
+      "lambdaFunction": "swapirest",
+      "permissions": {
+        "setting": "open"
+      }
+    },
+    "/category/{name}": {
+      "name": "/category/{name}",
+      "lambdaFunction": "swapirest",
+      "permissions": {
+        "setting": "open"
+      }
+    },
+    "/category/{categoryname}/{name}": {
+      "name": "/category/{categoryname}/{name}",
+      "lambdaFunction": "swapirest",
+      "permissions": {
+        "setting": "open"
+      }
+    }
+  }
+}

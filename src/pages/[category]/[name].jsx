@@ -1,8 +1,8 @@
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { getAllCategories } from 'api-client/get-all-categories'
+import { getCategories } from 'api-client/get-categories'
 import { getCategory } from 'api-client/get-category'
-import { searchUnit } from 'api-client/search-unit'
+import { getDetails } from 'api-client/get-details'
 import { getName } from 'utils/get-name'
 
 function renderDetails(details) {
@@ -64,7 +64,7 @@ function DetailsPage({ details }) {
 }
 
 export async function getStaticProps({ params, locale }) {
-  const data = await searchUnit({
+  const response = await getDetails({
     categoryName: params.category,
     name: params.name?.replaceAll('-', ' '),
     lang: locale
@@ -72,14 +72,14 @@ export async function getStaticProps({ params, locale }) {
 
   return {
     props: {
-      details: data.results?.[0] ?? data.rcwochuanaoc[0]
+      details: response.data.details
     }
   }
 }
 
 export async function getStaticPaths({ locales }) {
-  let categories = await getAllCategories()
-  categories = Object.keys(categories)
+  const response = await getCategories()
+  const { categories } = response.data
 
   const allCategoriesData = await Promise.all(
     categories.map(category => getCategory({ categoryName: category }))
@@ -87,8 +87,8 @@ export async function getStaticPaths({ locales }) {
 
   const params = []
   const paths = []
-  allCategoriesData.forEach((category, index) => {
-    category.results.forEach(data => {
+  allCategoriesData.forEach((res, index) => {
+    res.data.category.results.forEach(data => {
       params.push({
         category: categories[index],
         name: getName(data)?.replaceAll(' ', '-').toLowerCase()

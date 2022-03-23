@@ -2,7 +2,7 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { Card } from 'components/card'
 import { getCategory } from 'api-client/get-category'
-import { getAllCategories } from 'api-client/get-all-categories'
+import { getCategories } from 'api-client/get-categories'
 import { getName } from 'utils/get-name'
 
 function Category({ category = null }) {
@@ -38,13 +38,13 @@ function Category({ category = null }) {
 }
 
 export async function getStaticProps({ params }) {
-  const category = await getCategory({ categoryName: params.category })
-  return { props: { category } }
+  const response = await getCategory({ categoryName: params.category })
+  return { props: { category: response.data.category } }
 }
 
 export async function getStaticPaths({ locales }) {
-  let categories = await getAllCategories()
-  categories = Object.keys(categories)
+  const response = await getCategories()
+  const { categories } = response.data
 
   const paths = []
   categories.forEach(category => {

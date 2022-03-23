@@ -1,23 +1,10 @@
-const apiURL = process.env.NEXT_PUBLIC_API_URL
+import { API } from 'aws-amplify'
 
-async function client(endpoint, lang) {
-  return fetch(`${apiURL}/${endpoint ?? ''}`).then(async response => {
-    let data
-    if (lang === 'wo') {
-      const text = await response.text()
-      let validJSON = text.replace(/\\/g, ' ')
-      validJSON = validJSON.replace(/whhuanan/g, '"whhuanan"')
-      data = JSON.parse(validJSON)
-    } else {
-      data = await response.json()
-    }
+const apiName = 'swapi'
 
-    if (response.ok) {
-      return data
-    } else {
-      return Promise.reject(data)
-    }
-  })
+async function client(endpoint, init = {}) {
+  const response = await API.get(apiName, endpoint, init)
+  return response
 }
 
 export { client }
