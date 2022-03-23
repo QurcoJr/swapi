@@ -10,7 +10,7 @@ const awsmobile = {
       name: 'swapi',
       endpoint:
         env === 'development'
-          ? 'http://localhost:3000/'
+          ? 'http://localhost:3000'
           : 'https://5c1yp9dhyf.execute-api.us-east-1.amazonaws.com/dev',
       region: 'us-east-1'
     }

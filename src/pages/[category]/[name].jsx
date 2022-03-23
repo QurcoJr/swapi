@@ -91,7 +91,10 @@ export async function getStaticPaths({ locales }) {
     res.data.category.results.forEach(data => {
       params.push({
         category: categories[index],
-        name: getName(data)?.replaceAll(' ', '-').toLowerCase()
+        name: getName(data)
+          ?.replaceAll(' ', '-')
+          .replaceAll('/', '-')
+          .toLowerCase()
       })
     })
   })

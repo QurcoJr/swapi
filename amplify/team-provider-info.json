@@ -15,7 +15,7 @@
       "function": {
         "swapirest": {
           "deploymentBucketName": "amplify-swapi-dev-00054-deployment",
-          "s3Key": "amplify-builds/swapirest-5a583066375561332f4f-build.zip"
+          "s3Key": "amplify-builds/swapirest-62576b6c385353333959-build.zip"
         }
       }
     }
