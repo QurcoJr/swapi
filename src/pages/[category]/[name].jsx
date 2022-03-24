@@ -13,7 +13,7 @@ function renderDetails(details) {
 
     return (
       <tr key={key}>
-        <td>{key?.replaceAll('_', ' ')}: </td>
+        <td>{key?.replace(/_/gi, ' ')}: </td>
         <td>{value}</td>
       </tr>
     )
@@ -66,7 +66,7 @@ function DetailsPage({ details }) {
 export async function getStaticProps({ params, locale }) {
   const response = await getDetails({
     categoryName: params.category,
-    name: params.name?.replaceAll('-', ' '),
+    name: params.name?.replace(/-/gi, ' '),
     lang: locale
   })
 
@@ -91,10 +91,7 @@ export async function getStaticPaths({ locales }) {
     res.data.category.results.forEach(data => {
       params.push({
         category: categories[index],
-        name: getName(data)
-          .replaceAll(' ', '-')
-          .replaceAll('/', '-')
-          .toLowerCase()
+        name: getName(data).replace(/\/| /gi, '-').toLowerCase()
       })
     })
   })
